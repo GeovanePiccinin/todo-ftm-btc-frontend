@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 70px 0.5rem 40px 0.5rem;
+  max-width: 375px;
+}
+
+.title {
+  color: var(--bkg-primary);
+}
+
+.themeToggle {
+  background-color: transparent;
+  color: var(--bkg-primary);
+
+  font-size: 1.5rem;
+}
+
+@media screen and (min-width: 376px) {
+  .header {
+    max-width: 480px;
+    padding-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    max-width: 550px;
+    padding-top: 2rem;
+  }
+}

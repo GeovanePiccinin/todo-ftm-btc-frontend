@@ -1,38 +1,58 @@
+:root {
+  --bkg-primary: hsl(0, 0%, 98%);
+  --bkg-secondary: hsl(236, 33%, 92%);
+  --lightGreyishBlue: hsl(233, 11%, 84%);
+  --txt-primary: hsl(236, 9%, 61%);
+  --txt-secondary: hsl(235, 19%, 35%);
+  --darkGrayishBlue: hsl(234, 11%, 52%);
+  --lightGrayishBlue: hsl(234, 39%, 85%);
+  --link-blue: hsl(228, 45%, 44%);
+
+  --bkg-primary-drk: hsl(235, 21%, 11%);
+  --bkg-secondary-drk: hsl(235, 24%, 19%);
+  --lightGrayishBlue: hsl(234, 39%, 85%);
+  --lightGrayishBluehover: hsl(236, 33%, 92%);
+  --darkGrayishBlue: hsl(234, 11%, 52%);
+  --secondary-drk-gblue: hsl(237, 14%, 26%);
+}
+
 .App {
-  text-align: center;
+  height: 200px;
+  background: url(./images/bg-mobile-light.jpg) no-repeat;
+  background-position: center center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-size: 18px;
+  background-color: var(--bkg-secondary);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media screen and (min-width: 376px) {
+  .App {
+    background: url(./images/bg-desktop-light.jpg) no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+    height: 200px;
+    width: 100vw;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media screen and (min-width: 768px) {
+  .App {
+    background: url(./images/bg-desktop-light.jpg);
+    background-position: 0 0;
+    background-size: cover;
+    height: 15rem;
+    width: 100vw;
+  }
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.visually-hidden {
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  white-space: nowrap;
+  width: 1px;
 }

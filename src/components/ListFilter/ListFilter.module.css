@@ -1,0 +1,37 @@
+.listFilters {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 auto 2rem auto;
+  background-color: var(--bkg-primary);
+  border-radius: 5px;
+  width: 95%;
+  height: 2.5rem;
+}
+
+.listFilters-dark {
+  background-color: var(--bkg-secondary-drk);
+}
+
+.button {
+  color: var(--txt-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  outline: 0;
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+}
+
+.button:hover {
+  color: var(--link-blue);
+  cursor: pointer;
+}
+
+@media screen and (min-width: 600px) {
+  .listFilters {
+    margin: 0;
+    padding: 0;
+    width: 33%;
+  }
+}
