@@ -4,13 +4,20 @@ import TaskInput from "../TaskInput";
 import TodoItem from "../TodoItem";
 import ListFilter from "../ListFilter";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useTodoContext } from "../../context/TodoContext";
+
 import styles from "./TodoList.module.css";
 
 function TodoList() {
-  const [tasks, setTasks] = useState([
-    { name: "task 1", id: 1, check: false },
-    { name: "task 2", id: 2, check: false },
-  ]);
+  const {
+    todoList,
+    addTodoItem,
+    removeTodoItem,
+    markAsCompleted,
+    removeCompletedItems,
+    reorderingTodos,
+  } = useTodoContext();
+
   const [shownTasks, setShownTasks] = useState([]);
   const [filterOptions, setFilterOptions] = useState("all");
   const [windowSize, setWindowSize] = useState({
@@ -36,46 +43,40 @@ function TodoList() {
   }, []);
 
   useEffect(() => {
-    setShownTasks(tasks);
-  }, []);
+    setShownTasks(todoList);
+  }, [todoList]);
 
   useEffect(() => {
     const filterTasks = (filterOption) => {
       switch (filterOption) {
         case "all":
-          return tasks;
+          return todoList;
         case "active":
-          return tasks.filter((task) => task.check === false);
+          return todoList.filter((task) => task.check === false);
         case "completed":
-          return tasks.filter((task) => task.check === true);
+          return todoList.filter((task) => task.check === true);
         default:
-          return tasks;
+          return todoList;
       }
     };
     const filteredTasks = filterTasks(filterOptions);
     setShownTasks(filteredTasks);
-  }, [filterOptions, tasks]);
+  }, [filterOptions, todoList]);
 
-  function handleOnCheckTask(id) {
-    console.log("handleOnCheckTask");
-    const clonedTasks = [...tasks];
-    setTasks(
-      clonedTasks.map((t) => (t.id === id ? { ...t, check: !t.check } : t))
-    );
+  async function handleOnCheckTask(todo) {
+    markAsCompleted(todo);
   }
 
-  function addTask(newTask) {
-    setTasks([...tasks, newTask]);
+  async function addTask(newTask) {
+    addTodoItem(newTask);
   }
 
-  function handleDeleteTask(id) {
-    const updatedTasks = tasks.filter((item) => item.id !== id);
-    setTasks(updatedTasks);
+  async function handleDeleteTask(id) {
+    removeTodoItem(id);
   }
 
   function handleClearCompleted() {
-    const clearedTasks = tasks.filter((task) => task.check !== true);
-    setTasks(clearedTasks);
+    removeCompletedItems();
   }
 
   function handleShownCompleted() {
@@ -105,7 +106,7 @@ function TodoList() {
       );
       return;
     }
-    const newItems = [...tasks];
+    const newItems = [...todoList];
     const draggingItem = newItems[draggingItemIndex];
     newItems.splice(draggingItemIndex, 1);
     newItems.splice(index, 0, draggingItem);
@@ -113,7 +114,7 @@ function TodoList() {
 
     console.log("newItems", newItems);
 
-    setTasks(newItems);
+    reorderingTodos(newItems);
   }
 
   function handleDragEnd() {
@@ -127,7 +128,7 @@ function TodoList() {
     </button>
   );
 
-  //console.log("tasks", tasks);
+  console.log("shownTasks", shownTasks);
 
   return (
     <div className={styles.wrapper}>
@@ -156,7 +157,7 @@ function TodoList() {
           >
             <p className={clsx(styles.itemsLeft, styles[`itemsLeft-${theme}`])}>
               {" "}
-              Items Left {tasks.length}
+              Items Left {todoList.length}
             </p>
             <ClearCompleted />
           </div>
@@ -169,7 +170,7 @@ function TodoList() {
           >
             <p className={clsx(styles.itemsLeft, styles[`itemsLeft-${theme}`])}>
               {" "}
-              Items Left {tasks.length}
+              Items Left {todoList.length}
             </p>
             <ListFilter
               handleShownActive={handleShownActive}

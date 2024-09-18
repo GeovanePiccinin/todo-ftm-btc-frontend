@@ -16,7 +16,6 @@ function TaskInput({ addTask }) {
     if (newTask.trim() !== "") {
       addTask({
         name: newTask,
-        id: crypto.randomUUID(),
         check: false,
       });
       setNewTask("");

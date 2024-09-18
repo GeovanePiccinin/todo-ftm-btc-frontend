@@ -31,3 +31,12 @@
     padding-top: 2rem;
   }
 }
+
+.iconContainer {
+  display: flex;
+  background-color: transparent;
+  color: var(--bkg-primary);
+  margin: 2rem 2rem;
+  font-size: 1.5rem;
+  gap: 0.5rem;
+}

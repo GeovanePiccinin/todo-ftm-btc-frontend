@@ -17,8 +17,6 @@ function TodoItem({
 }) {
   const { theme } = useContext(ThemeContext);
 
-  //console.log("task", task);
-
   return (
     <li className={clsx(styles.li, styles[`li-${theme}`])}>
       <div
@@ -39,7 +37,7 @@ function TodoItem({
             id={task.id}
             className={styles.inputTypeCheckbox}
             name="task"
-            onChange={() => handleOnCheckTask(task.id)}
+            onChange={() => handleOnCheckTask(task)}
           />
           <IconCheck
             viewBox="-5 -4 22 18"

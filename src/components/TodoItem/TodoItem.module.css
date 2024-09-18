@@ -54,7 +54,7 @@
 }
 
 .checkbox:hover {
-  background: linear-gradient(to bottom right, #57ddff, #c058f3);
+  border: 1px var(--darkGrayishBlue) solid;
 }
 
 .checkboxActive {

@@ -1,0 +1,97 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 auto;
+  background-color: transparent;
+  min-height: 100vh;
+  max-width: 480px;
+}
+.form {
+  background-color: var(--bkg-primary);
+  padding: 0.5rem;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.input {
+  border: none;
+  font-family: inherit;
+  background-color: inherit;
+  width: 100%;
+  font-size: 1.2rem;
+  color: var(--txt-secondary);
+  border-bottom: solid 1px var(--txt-secondary);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.input:focus {
+  outline: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    max-width: 600px;
+    height: auto;
+  }
+}
+
+.darkForm {
+  background-color: var(--bkg-secondary-drk);
+}
+
+.darkInput {
+  color: white;
+}
+
+.buttonContainer {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.buttonRigth {
+  flex: 1;
+  text-align: right;
+}
+
+.btn,
+.toggleBtn {
+  color: var(--txt-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.darkBtn,
+.darkToggle-btn {
+  color: var(--txt-secondary);
+}
+
+.toggleBtn:hover {
+  color: hsl(215, 64%, 54%);
+  cursor: pointer;
+}
+
+darkToggleBtn:hover {
+  color: hsl(215, 64%, 54%);
+  cursor: pointer;
+}
+
+.toggleBtn:focus {
+  color: hsl(215, 64%, 54%);
+  outline: 0;
+}
+
+.passwordInput {
+  position: relative;
+}
+
+.passwordEye {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--txt-secondary);
+  font-size: 1rem;
+}
