@@ -34,15 +34,6 @@
   background-color: var(--bkg-secondary-drk);
 }
 
-.itemsLeft {
-  font-weight: bolder;
-  color: var(--txt-primary);
-}
-
-.itemsLeft-dark {
-  color: var(--txt-primary);
-}
-
 .button {
   color: var(--txt-primary);
   font-size: 0.75rem;

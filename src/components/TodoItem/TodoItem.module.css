@@ -48,6 +48,10 @@
   margin-right: 1rem;
 }
 
+.timePassed {
+  font-size: 0.75rem;
+}
+
 .checkbox-dark {
   background: var(--bkg-secondary-drk);
   border: 1px var(--secondary-drk-gblue) solid;

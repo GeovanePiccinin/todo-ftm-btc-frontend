@@ -8,6 +8,9 @@ function ListFilter({
   handleShownCompleted,
 }) {
   const { theme } = useContext(ThemeContext);
+
+  console.log("Rendering ListFilter");
+
   return (
     <div className={clsx(styles.listFilters, styles[`listFilters-${theme}`])}>
       <button onClick={handleShownAll} className={styles.button}>

@@ -1,0 +1,8 @@
+.itemsLeft {
+  font-weight: bolder;
+  color: var(--txt-primary);
+}
+
+.itemsLeft-dark {
+  color: var(--txt-primary);
+}

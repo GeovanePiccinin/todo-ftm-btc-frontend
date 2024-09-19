@@ -17,10 +17,13 @@ function TaskInput({ addTask }) {
       addTask({
         name: newTask,
         check: false,
+        createdAt: new Date(),
       });
       setNewTask("");
     }
   }
+
+  console.log("Rendering TaskInput");
 
   return (
     <form

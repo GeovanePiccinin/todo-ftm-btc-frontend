@@ -1,8 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback, useMemo } from "react";
 import clsx from "clsx";
 import TaskInput from "../TaskInput";
 import TodoItem from "../TodoItem";
 import ListFilter from "../ListFilter";
+import ItemsLeft from "../ItemsLeft/ItemsLeft";
+import ClearCompleted from "../ClearCompleted/ClearCompleted";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useTodoContext } from "../../context/TodoContext";
 
@@ -18,7 +20,6 @@ function TodoList() {
     reorderingTodos,
   } = useTodoContext();
 
-  const [shownTasks, setShownTasks] = useState([]);
   const [filterOptions, setFilterOptions] = useState("all");
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -28,6 +29,38 @@ function TodoList() {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
 
   const { theme } = useContext(ThemeContext);
+
+  const formatTodoList = (todos) => {
+    console.log("running formatTodoList");
+    return todos.map((todo) => {
+      const currentTime = new Date();
+      const timeDifferenceMins = Math.floor(
+        (currentTime - new Date(todo.createdAt)) / 60000
+      );
+      return { ...todo, ellapsedMinutes: timeDifferenceMins };
+    });
+  };
+
+  const formattedTodoList = useMemo(() => {
+    return formatTodoList(todoList);
+  }, [todoList]);
+
+  const filterTasks = (todos, filterOption) => {
+    switch (filterOption) {
+      case "all":
+        return todos;
+      case "active":
+        return todos.filter((task) => task.check === false);
+      case "completed":
+        return todos.filter((task) => task.check === true);
+      default:
+        return todos;
+    }
+  };
+
+  const memoizedShownTasks = useMemo(() => {
+    return filterTasks(formattedTodoList, filterOptions);
+  }, [formattedTodoList, filterOptions]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,27 +75,6 @@ function TodoList() {
     };
   }, []);
 
-  useEffect(() => {
-    setShownTasks(todoList);
-  }, [todoList]);
-
-  useEffect(() => {
-    const filterTasks = (filterOption) => {
-      switch (filterOption) {
-        case "all":
-          return todoList;
-        case "active":
-          return todoList.filter((task) => task.check === false);
-        case "completed":
-          return todoList.filter((task) => task.check === true);
-        default:
-          return todoList;
-      }
-    };
-    const filteredTasks = filterTasks(filterOptions);
-    setShownTasks(filteredTasks);
-  }, [filterOptions, todoList]);
-
   async function handleOnCheckTask(todo) {
     markAsCompleted(todo);
   }
@@ -75,9 +87,9 @@ function TodoList() {
     removeTodoItem(id);
   }
 
-  function handleClearCompleted() {
+  const handleClearCompleted = useCallback(() => {
     removeCompletedItems();
-  }
+  }, [removeCompletedItems]);
 
   function handleShownCompleted() {
     setFilterOptions("completed");
@@ -112,8 +124,6 @@ function TodoList() {
     newItems.splice(index, 0, draggingItem);
     setDraggingItemIndex(index);
 
-    console.log("newItems", newItems);
-
     reorderingTodos(newItems);
   }
 
@@ -122,20 +132,14 @@ function TodoList() {
     setDraggingItemIndex(null);
   }
 
-  const ClearCompleted = () => (
-    <button onClick={handleClearCompleted} className={styles.button}>
-      Clear Completed
-    </button>
-  );
-
-  console.log("shownTasks", shownTasks);
+  console.log("Rendering TodoList");
 
   return (
     <div className={styles.wrapper}>
       <TaskInput addTask={addTask} />
 
       <ul className={clsx(styles.todos, styles[`todos-${theme}`])}>
-        {shownTasks.map((task, index) => (
+        {memoizedShownTasks.map((task, index) => (
           <TodoItem
             key={index}
             index={index}
@@ -155,11 +159,8 @@ function TodoList() {
               styles[`itemsLeftClearContainer-${theme}`]
             )}
           >
-            <p className={clsx(styles.itemsLeft, styles[`itemsLeft-${theme}`])}>
-              {" "}
-              Items Left {todoList.length}
-            </p>
-            <ClearCompleted />
+            <ItemsLeft itemsLeft={todoList.length} />
+            <ClearCompleted handleClearCompleted={handleClearCompleted} />
           </div>
         ) : (
           <div
@@ -168,16 +169,13 @@ function TodoList() {
               styles[`itemsLeftClearContainer-${theme}`]
             )}
           >
-            <p className={clsx(styles.itemsLeft, styles[`itemsLeft-${theme}`])}>
-              {" "}
-              Items Left {todoList.length}
-            </p>
+            <ItemsLeft itemsLeft={todoList.length} />
             <ListFilter
               handleShownActive={handleShownActive}
               handleShownAll={handleShownAll}
               handleShownCompleted={handleShownCompleted}
             />
-            <ClearCompleted />
+            <ClearCompleted handleClearCompleted={handleClearCompleted} />
           </div>
         )}
       </ul>

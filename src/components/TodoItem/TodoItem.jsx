@@ -17,6 +17,8 @@ function TodoItem({
 }) {
   const { theme } = useContext(ThemeContext);
 
+  console.log("Rendering TodoItem");
+
   return (
     <li className={clsx(styles.li, styles[`li-${theme}`])}>
       <div
@@ -47,7 +49,12 @@ function TodoItem({
               task.check ? styles.checkboxActive : ""
             )}
           />
-          <span htmlFor="task">{task.name}</span>
+          <span htmlFor="task">
+            {task.name}{" "}
+            <span
+              className={styles.timePassed}
+            >{` created at ${task.ellapsedMinutes} minutes ago`}</span>
+          </span>
         </label>
         <button
           className={styles.deleteButton}

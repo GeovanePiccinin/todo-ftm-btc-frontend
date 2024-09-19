@@ -1,0 +1,11 @@
+.clearCompletedBtn {
+  font-weight: 400;
+  color: var(--txt-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.clearCompletedBtn:hover {
+  color: hsl(215, 64%, 54%);
+  cursor: pointer;
+}
