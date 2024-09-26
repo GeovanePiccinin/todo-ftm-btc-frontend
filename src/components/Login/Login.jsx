@@ -116,6 +116,7 @@ function Login() {
               <button
                 className={clsx(styles.btn, styles.toggleBtn)}
                 onClick={handleLogin}
+                name="login"
               >
                 Login
               </button>

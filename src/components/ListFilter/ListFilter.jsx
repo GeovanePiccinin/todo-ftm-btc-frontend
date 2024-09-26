@@ -13,13 +13,21 @@ function ListFilter({
 
   return (
     <div className={clsx(styles.listFilters, styles[`listFilters-${theme}`])}>
-      <button onClick={handleShownAll} className={styles.button}>
+      <button name="all" onClick={handleShownAll} className={styles.button}>
         All
       </button>
-      <button onClick={handleShownActive} className={styles.button}>
+      <button
+        name="active"
+        onClick={handleShownActive}
+        className={styles.button}
+      >
         Active
       </button>
-      <button onClick={handleShownCompleted} className={styles.button}>
+      <button
+        name="completed"
+        onClick={handleShownCompleted}
+        className={styles.button}
+      >
         Completed
       </button>
     </div>
