@@ -6,16 +6,20 @@ import { ReactComponent as IconCross } from "../../images/icon-cross.svg";
 import { ReactComponent as IconCheck } from "../../images/icon-check.svg";
 import clsx from "clsx";
 
+import { useDispatch } from "react-redux";
+import { toggleCompletedAsync, deleteTodoAsync } from "../../redux/todoSlice";
+
 function TodoItem({
   task,
   index,
-  handleOnCheckTask,
-  handleDeleteTask,
+
   handleDragStart,
   handleDragOver,
   handleDragEnd,
 }) {
   const { theme } = useContext(ThemeContext);
+
+  const dispatch = useDispatch();
 
   console.log("Rendering TodoItem");
 
@@ -39,7 +43,7 @@ function TodoItem({
             id={task.id}
             className={styles.inputTypeCheckbox}
             name="task"
-            onChange={() => handleOnCheckTask(task)}
+            onChange={() => dispatch(toggleCompletedAsync(task))}
           />
           <IconCheck
             viewBox="-5 -4 22 18"
@@ -58,7 +62,7 @@ function TodoItem({
         </label>
         <button
           className={styles.deleteButton}
-          onClick={() => handleDeleteTask(task.id)}
+          onClick={() => dispatch(deleteTodoAsync(task.id))}
         >
           <IconCross />
           <span className="visually-hidden">Delete</span>

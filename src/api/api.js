@@ -47,7 +47,7 @@ export const deleteTodo = async (todoId) => {
     method: "DELETE",
   });
   const data = await handleResponse(response);
-  return data;
+  return { id: todoId, ...data };
 };
 
 export const deleteManyTodos = async (todos) => {

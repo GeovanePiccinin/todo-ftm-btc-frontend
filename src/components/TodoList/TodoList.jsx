@@ -6,19 +6,25 @@ import ListFilter from "../ListFilter";
 import ItemsLeft from "../ItemsLeft/ItemsLeft";
 import ClearCompleted from "../ClearCompleted/ClearCompleted";
 import { ThemeContext } from "../../context/ThemeContext";
-import { useTodoContext } from "../../context/TodoContext";
+//import { useTodoContext } from "../../context/TodoContext";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getTodosAsync, reorderingTodos } from "../../redux/todoSlice";
 
 import styles from "./TodoList.module.css";
 
 function TodoList() {
-  const {
+  /* const {
     todoList,
     addTodoItem,
     removeTodoItem,
     markAsCompleted,
     removeCompletedItems,
     reorderingTodos,
-  } = useTodoContext();
+  } = useTodoContext(); */
+
+  const todoList = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
 
   const [filterOptions, setFilterOptions] = useState("all");
   const [windowSize, setWindowSize] = useState({
@@ -29,6 +35,10 @@ function TodoList() {
   const [draggingItemIndex, setDraggingItemIndex] = useState(null);
 
   const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    dispatch(getTodosAsync());
+  }, [dispatch]);
 
   const formatTodoList = (todos) => {
     console.log("running formatTodoList");
@@ -75,21 +85,21 @@ function TodoList() {
     };
   }, []);
 
-  async function handleOnCheckTask(todo) {
+  /* async function handleOnCheckTask(todo) {
     markAsCompleted(todo);
-  }
+  } */
 
-  async function addTask(newTask) {
+  /*  async function addTask(newTask) {
     addTodoItem(newTask);
-  }
+  } */
 
-  async function handleDeleteTask(id) {
+  /*  async function handleDeleteTask(id) {
     removeTodoItem(id);
   }
-
-  const handleClearCompleted = useCallback(() => {
+ */
+  /*  const handleClearCompleted = useCallback(() => {
     removeCompletedItems();
-  }, [removeCompletedItems]);
+  }, [removeCompletedItems]); */
 
   function handleShownCompleted() {
     setFilterOptions("completed");
@@ -136,7 +146,7 @@ function TodoList() {
 
   return (
     <div className={styles.wrapper}>
-      <TaskInput addTask={addTask} />
+      <TaskInput />
 
       <ul className={clsx(styles.todos, styles[`todos-${theme}`])}>
         {memoizedShownTasks.map((task, index) => (
@@ -144,8 +154,8 @@ function TodoList() {
             key={index}
             index={index}
             task={task}
-            handleDeleteTask={handleDeleteTask}
-            handleOnCheckTask={handleOnCheckTask}
+            /* handleDeleteTask={handleDeleteTask}
+            handleOnCheckTask={handleOnCheckTask} */
             handleDragEnd={handleDragEnd}
             handleDragStart={handleDragStart}
             handleDragOver={handleDragOver}
@@ -160,7 +170,7 @@ function TodoList() {
             )}
           >
             <ItemsLeft itemsLeft={todoList.length} />
-            <ClearCompleted handleClearCompleted={handleClearCompleted} />
+            <ClearCompleted />
           </div>
         ) : (
           <div
@@ -175,7 +185,7 @@ function TodoList() {
               handleShownAll={handleShownAll}
               handleShownCompleted={handleShownCompleted}
             />
-            <ClearCompleted handleClearCompleted={handleClearCompleted} />
+            <ClearCompleted />
           </div>
         )}
       </ul>

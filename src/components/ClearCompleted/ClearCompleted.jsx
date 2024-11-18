@@ -1,10 +1,17 @@
 import { memo } from "react";
 import styles from "./ClearCompleted.module.css";
 
-const ClearCompleted = memo(({ handleClearCompleted }) => {
+import { useDispatch } from "react-redux";
+import { removeCompletedTodosAsync } from "../../redux/todoSlice";
+
+const ClearCompleted = memo(() => {
+  const dispatch = useDispatch();
   console.log("Rendering ClearCompleted");
   return (
-    <button onClick={handleClearCompleted} className={styles.clearCompletedBtn}>
+    <button
+      onClick={() => dispatch(removeCompletedTodosAsync())}
+      className={styles.clearCompletedBtn}
+    >
       Clear Completed
     </button>
   );

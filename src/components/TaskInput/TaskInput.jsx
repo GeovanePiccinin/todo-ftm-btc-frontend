@@ -3,9 +3,13 @@ import { useState, useContext } from "react";
 import styles from "./TaskInput.module.css";
 import { ThemeContext } from "../../context/ThemeContext";
 
+import { useDispatch } from "react-redux";
+import { addTodoAsync } from "../../redux/todoSlice";
+
 function TaskInput({ addTask }) {
   const [newTask, setNewTask] = useState("");
   const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
@@ -14,11 +18,12 @@ function TaskInput({ addTask }) {
   function handleOnSubmit(e) {
     e.preventDefault();
     if (newTask.trim() !== "") {
-      addTask({
+      const newTodo = {
         name: newTask,
         check: false,
         createdAt: new Date(),
-      });
+      };
+      dispatch(addTodoAsync(newTodo));
       setNewTask("");
     }
   }
