@@ -9,13 +9,13 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAOf3OKS3K_3dVmMCphzYKWLo2dmhrnlbM",
-  authDomain: "todo-list-gravacoes.firebaseapp.com",
-  projectId: "todo-list-gravacoes",
-  storageBucket: "todo-list-gravacoes.appspot.com",
-  messagingSenderId: "695410747663",
-  appId: "1:695410747663:web:c7bbc0044f5e0d04bfb67a",
-  measurementId: "G-LWKFV8GG89",
+  apiKey: "your key",
+  authDomain: "your domain",
+  projectId: "your id",
+  storageBucket: "your bucket",
+  messagingSenderId: "ID",
+  appId: "your appID",
+  measurementId: "ID",
 };
 
 // Initialize Firebase
